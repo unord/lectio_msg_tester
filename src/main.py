@@ -1,4 +1,6 @@
 # local imports
+import sys
+
 import import_env, intro, lectio, read_version, uptime_kuma
 
 # 3rd party imports
@@ -25,7 +27,7 @@ CURRENT_VERSION = read_version.get_version()
 def main():
     print(intro.get_intro(DOCKER_REPO, CURRENT_VERSION, GITHUB_README, UPTIME_KUMA_URL, UPTIME_KUMA_URL_CHECK))
     while True:
-        lectio.lectio_send_msg(LECTIO_SCHOOL_ID,
+        lectio_status = lectio.lectio_send_msg(LECTIO_SCHOOL_ID,
                                LECTIO_USER,
                                LECTIO_PASSWORD,
                                'RPA holdet Øh',
@@ -33,9 +35,12 @@ def main():
                                f'This is an hourly test msg from the docker container. Time: {datetime.now()}',
                                False,
                                True)
-        print(f'Hourly test msg to Lectio. Time: {datetime.now()}')
-
-        uptime_kuma.push_health_check(UPTIME_KUMA_URL)
+        if lectio_status['success']:
+            print(f'Hourly test msg to Lectio. Time: {datetime.now()}')
+            uptime_kuma.push_health_check(UPTIME_KUMA_URL)
+        else:
+            print(f'Hourly test msg to Lectio failed. Time: {datetime.now()}')
+            sys.exit(1)
 
         time.sleep(int(MAIN_LOOP_TIME))
 
