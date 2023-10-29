@@ -16,7 +16,7 @@ def get_intro(docker_repo: str,
     intro_msg = intro_msg + f"System checks health via UpTime-kuma every {uptime_kuma_check}\n"
     intro_msg = intro_msg + f"UpTime-kuma url: {uptime_kuma_url} seconds\n\n"
 
-    intro_msg = intro_msg + "Starting main loop that checks for new employees every 60 seconds\n"
+    intro_msg = intro_msg + "Starting main loop that check lectio messageing is working\n"
     intro_msg = intro_msg + '**************************************************************************************\n\n'
     return intro_msg
 
