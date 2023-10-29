@@ -14,7 +14,7 @@ UPTIME_KUMA_URL_CHECK = import_env.get_env_variable("UPTIME_KUMA_URL_CHECK")
 LECTIO_USER = import_env.get_env_variable("LECTIO_USER")
 LECTIO_PASSWORD = import_env.get_env_variable("LECTIO_PASSWORD")
 LECTIO_SCHOOL_ID = import_env.get_env_variable("LECTIO_SCHOOL_ID")
-MAIN_LOOP_TIME = import_env.get_env_variable("LECTIO_SCHOOL_ID")
+MAIN_LOOP_TIME = import_env.get_env_variable("MAIN_LOOP_TIME")
 
 
 # get current version
