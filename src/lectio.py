@@ -58,7 +58,7 @@ def lectio_send_msg(school_id: str,
             print('New message page loaded')
             to_field_locator = page.locator("#s_m_Content_Content_MessageThreadCtrl_addRecipientDD_inp")
             to_field_locator.fill(send_to)
-            time.sleep(1)
+            time.sleep(5)
             page.click(f"text={send_to}")
 
             # Fill the subject field
