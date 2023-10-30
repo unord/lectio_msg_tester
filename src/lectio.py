@@ -1,5 +1,5 @@
 import time
-
+from icecream import ic
 from playwright.sync_api import sync_playwright, expect
 
 
@@ -90,7 +90,15 @@ def lectio_send_msg(school_id: str,
         except Exception as e:
             if browser:
                 browser.close()
-            print(f'Error in lectio_send_msg: {e}')
+            print(f'Login failed.')
+            ic({'school': school_id,
+                'user': lectio_user,
+                'password': lectio_password,
+                'send_to': send_to,
+                'subject': subject,
+                'msg': msg,
+                'this_msg_can_be_replied': this_msg_can_be_replied,
+                'browser_headless': browser_headless})
             return {'msg': f'Login failed. Exception: {e}', 'success': False}
 
 
