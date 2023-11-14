@@ -1,4 +1,6 @@
+import sys
 import time
+import traceback
 from playwright.sync_api import sync_playwright, expect
 
 
@@ -8,28 +10,57 @@ class LectioBot:
         self.lectio_user = lectio_user
         self.lectio_password = lectio_password
         self.browser_headless = browser_headless
-        self.browser, self.page = self.launch_browser()
+        self.playwright = None
+        self.browser = None
+        self.page = None
 
-    def launch_browser(self):
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=self.browser_headless)
-            page = browser.new_page()
-            return browser, page
+
+    def start_playwright(self):
+        try:
+            self.playwright = sync_playwright().start()
+            self.browser = self.playwright.chromium.launch(headless=self.browser_headless)
+            self.page = self.browser.new_page()
+        except Exception as e:
+            print(f"Error starting Playwright: {e}")
+            print(traceback.format_exc())
+            sys.exit(1)
+
+    def stop_playwright(self):
+        try:
+            if self.browser:
+                self.browser.close()
+            if self.playwright:
+                self.playwright.stop()
+        except Exception as e:
+            print(f"Error stopping Playwright: {e}")
+            print(traceback.format_exc())
 
     def login_to_lectio(self):
-        self.page.goto(f"https://www.lectio.dk/lectio/{self.school_id}/login.aspx")
-        locator = self.page.locator('.maintitle')
-        expect(locator).to_contain_text("Lectio Log ind")
+        try:
+            self.page.goto(f"https://www.lectio.dk/lectio/{self.school_id}/login.aspx")
+            locator = self.page.locator('.maintitle')
+            expect(locator).to_contain_text("Lectio Log ind")
+        except Exception as e:
+            print(e)
+            print(traceback.format_exc())
+            sys.exit(1)
+            return False
 
-        self.page.fill("#username", self.lectio_user)
-        self.page.fill("#password", self.lectio_password)
-        self.page.click("#m_Content_submitbtn2")
+        try:
+            self.page.fill("#username", self.lectio_user)
+            self.page.fill("#password", self.lectio_password)
+            self.page.click("#m_Content_submitbtn2")
 
-        locator = self.page.locator('.ls-user-name')
-        expect(locator).to_contain_text(self.lectio_user)
+            locator = self.page.locator('.ls-user-name')
+            expect(locator).to_contain_text(self.lectio_user)
+        except Exception as e:
+            print("Error logging in")
+            print(e)
+            return False
         return True
 
     def navigate_to_messages(self):
+        self.page.goto(f"https://www.lectio.dk/lectio/234/beskeder2.aspx")
         locator = self.page.locator("#s_m_Content_Content_NewMessageLnk")
         expect(locator, 'Ny besked')
         self.page.click("#s_m_Content_Content_NewMessageLnk")
