@@ -2,6 +2,7 @@ import pytest
 from src.intro import get_intro
 import platform
 
+
 def test_get_intro():
     docker_repo = "example_repo"
     current_version = "1.0.0"
