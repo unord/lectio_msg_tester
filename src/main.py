@@ -23,7 +23,7 @@ CURRENT_VERSION = read_version.get_version()
 
 
 def test_lectio_send_msg():
-    lectio_session = lectio.LectioBot(LECTIO_SCHOOL_ID, LECTIO_USER, LECTIO_PASSWORD, False)
+    lectio_session = lectio.LectioBot(LECTIO_SCHOOL_ID, LECTIO_USER, LECTIO_PASSWORD, True)
     lectio_session.start_playwright()
     lectio_session.login_to_lectio()
     lectio_session.navigate_to_messages()
