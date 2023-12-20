@@ -17,13 +17,22 @@ LECTIO_USER = import_env.get_env_variable("LECTIO_USER")
 LECTIO_PASSWORD = import_env.get_env_variable("LECTIO_PASSWORD")
 LECTIO_SCHOOL_ID = import_env.get_env_variable("LECTIO_SCHOOL_ID")
 MAIN_LOOP_TIME = import_env.get_env_variable("MAIN_LOOP_TIME")
+APPLITOOLS_IS_ACTIVE = True if import_env.get_env_variable("APPLITOOLS_IS_ACTIVE") == "True" else False
+APPLITOOLS_API_KEY = import_env.get_env_variable("APPLITOOLS_API_KEY")
 
 # get current version
 CURRENT_VERSION = read_version.get_version()
 
 
 def test_lectio_send_msg():
-    lectio_session = lectio.LectioBot(LECTIO_SCHOOL_ID, LECTIO_USER, LECTIO_PASSWORD, True)
+    lectio_session = lectio.LectioBot(LECTIO_SCHOOL_ID,
+                                      LECTIO_USER,
+                                      LECTIO_PASSWORD,
+                                      True,
+                                      APPLITOOLS_IS_ACTIVE,
+                                      APPLITOOLS_API_KEY,
+                                      'lectio_msg_tester',
+                                      f'Sending test message at {datetime.now()}')
     lectio_session.start_playwright()
     lectio_session.login_to_lectio()
     lectio_session.navigate_to_messages()
