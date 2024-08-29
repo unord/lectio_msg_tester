@@ -36,7 +36,7 @@ def test_lectio_send_msg():
     lectio_session.start_playwright()
     lectio_session.login_to_lectio()
     lectio_session.navigate_to_messages()
-    lectio_session.send_message('RPA Øh',
+    lectio_session.send_message('RPA holdet Øh',
                                 'Hourly msg test',
                                 f'This is an hourly test msg from the docker container. Time: {datetime.now()}',
                                 False,
