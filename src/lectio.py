@@ -58,7 +58,7 @@ class LectioBot:
 
     def login_to_lectio(self):
         try:
-            self.page.goto(f"https://www.lectio.dk/lectio/{self.school_id}/login.aspx")
+            self.page.goto(f"https://www.lectio.dk/lectio/{self.school_id}/login.aspx?forcelogintype=brugernavn")
             if self.applitools_is_active:
                 self.eyes.check_window("Lectio Login page")
             locator = self.page.locator('.maintitle')
