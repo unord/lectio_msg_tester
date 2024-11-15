@@ -58,6 +58,7 @@ class LectioBot:
 
     def login_to_lectio(self):
         login_url = f"https://www.lectio.dk/lectio/{self.school_id}/login.aspx?prevurl=default.aspx&type=brugernavn"
+
         try:
             self.page.goto(login_url)
             if self.applitools_is_active:
